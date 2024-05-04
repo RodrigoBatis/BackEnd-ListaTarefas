@@ -31,7 +31,16 @@ app.get('/tarefas', (req, res) => {
 
 // Rota para editar uma tarefa existente
 app.put('/tarefas/:id', (req, res) => {
-    // Lógica para editar uma tarefa no banco de dados com base no ID
+    const {id} = req.params;
+    const {tarefa}=req.body;
+    const index = tarefas.findIndex(t => t.id === parseInt(id));
+    if(index != -1){
+      tarefas[index].tarefa = tarefa;
+      res.status(200).json({message: 'Tarefa atualizada com sucesso!'});
+    }else{
+      res.status(404).json({error: "Tarefa não encontrada!"})
+    }
+
 });
 
 // Rota para excluir uma tarefa
